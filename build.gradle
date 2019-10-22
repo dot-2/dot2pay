@@ -34,14 +34,14 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
-    // https://mvnrepository.com/artifact/com.github.axet/kaptcha
-    compile group: 'com.github.axet', name: 'kaptcha', version: '0.0.9'
     // https://mvnrepository.com/artifact/org.apache.shiro/shiro-spring
     compile group: 'org.apache.shiro', name: 'shiro-spring', version: '1.4.1'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.1.9.RELEASE'
     implementation "io.springfox:springfox-swagger2:2.9.2"
     implementation "io.springfox:springfox-swagger-ui:2.9.2"
+    // https://gitee.com/whvse/EasyCaptcha
+    compile 'com.github.whvcse:easy-captcha:1.6.2'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
