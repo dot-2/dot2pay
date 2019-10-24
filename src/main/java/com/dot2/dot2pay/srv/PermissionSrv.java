@@ -10,6 +10,8 @@ public interface PermissionSrv {
 
     List<Permission> list() throws DataAccessException;
 
+    Permission get(Long id);
+
     // 支持根据 id 更新部分字段
     Permission update(Permission permission) throws DataAccessException;
 

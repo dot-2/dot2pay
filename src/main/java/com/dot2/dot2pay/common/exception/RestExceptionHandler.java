@@ -43,24 +43,6 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public Object handleResourceErrException(ParameterException e) {
         logger.info(e.getMessage(), e);
-        if (e.getCode() == 0) {
-            // 如果 code 为 0 则返回 json 不显示 code 字段
-            abstract class ErrResult {}
-            ErrResult er = new ErrResult() {
-                private String error;
-
-                public String getError() {
-                    return error;
-                }
-
-                public void setError(String error) {
-                    this.error = error;
-                }
-            };
-            Result result = new Result(e.getMessage(), 0);
-            BeanUtils.copyProperties(result, er, "code");
-            return er;
-        }
         return new Result(e.getMessage(), e.getCode());
 
     }

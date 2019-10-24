@@ -1,5 +1,6 @@
 package com.dot2.dot2pay.api;
 
+import com.dot2.dot2pay.common.exception.NotFoundException;
 import com.dot2.dot2pay.common.util.Util;
 import com.dot2.dot2pay.model.bo.RequestPermission;
 import com.dot2.dot2pay.model.po.Permission;
@@ -42,6 +43,15 @@ public class PermissionController {
     @GetMapping
     public Object list() {
         return permissionSrv.list();
+    }
+
+    @GetMapping("/{id}")
+    public Permission get(@PathVariable Long id) throws NotFoundException {
+        Permission p = permissionSrv.get(id);
+        if (p == null) {
+            throw new NotFoundException("该权限不存在");
+        }
+        return p;
     }
 
 }

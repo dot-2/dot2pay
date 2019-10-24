@@ -13,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -39,16 +40,14 @@ public class PermissionSrvImpl implements PermissionSrv {
         return ps;
     }
 
-    private void getChildren(List<Permission> ps) {
-        if (ps.size() == 0) return;
-        for (Permission p : ps) {
-            p.setChildren(permissionDao.findAllByParentId(p.getId()));
-            getChildren(p.getChildren());
-        }
+    @Override
+    @Cacheable(key = "#root.targetClass+'-'+#p0", value = "permission")
+    public Permission get(Long id) throws DataAccessException {
+        return permissionDao.findById(id).orElse(null);
     }
 
     @Override
-    @CacheEvict(key = "#root.targetClass", value = "list")
+    @CacheEvict(key = "#root.targetClass+'-'+#p0.id", value = "permission")
     public Permission update(Permission permission) throws DataAccessException {
         Optional<Permission> ret = permissionDao.findById(permission.getId());
         Permission currentPermission = null;
@@ -69,4 +68,15 @@ public class PermissionSrvImpl implements PermissionSrv {
     public void remove(Long id) throws DataAccessException {
         permissionDao.deleteById(id);
     }
+
+
+    // 获取下级权限
+    private void getChildren(List<Permission> ps) {
+        if (ps.size() == 0) return;
+        for (Permission p : ps) {
+            p.setChildren(permissionDao.findAllByParentId(p.getId()));
+            getChildren(p.getChildren());
+        }
+    }
+
 }

@@ -8,4 +8,8 @@ public class NotFoundException extends GlobalException
     {
         super(message, code.getCode());
     }
+    public NotFoundException(String message)
+    {
+        super(message, -1);
+    }
 }

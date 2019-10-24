@@ -2,6 +2,7 @@ package com.dot2.dot2pay.model.po;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Permission extends AuditModel implements Serializable {
 
     private static final long serialVersionUID = 1353663165920588257L;
@@ -40,7 +42,7 @@ public class Permission extends AuditModel implements Serializable {
     private Long parentId;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roleList;
 
     @Transient // 忽略字段在table中的映射
