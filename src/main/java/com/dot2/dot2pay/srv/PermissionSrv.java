@@ -1,6 +1,6 @@
 package com.dot2.dot2pay.srv;
 
-import com.dot2.dot2pay.entity.Permission;
+import com.dot2.dot2pay.model.po.Permission;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;

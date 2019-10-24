@@ -1,17 +1,19 @@
 package com.dot2.dot2pay.srv.impl;
 
 import com.dot2.dot2pay.dao.PermissionDao;
-import com.dot2.dot2pay.entity.Permission;
+import com.dot2.dot2pay.model.po.Permission;
 import com.dot2.dot2pay.srv.PermissionSrv;
 import com.dot2.dot2pay.common.util.Util;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,10 +32,19 @@ public class PermissionSrvImpl implements PermissionSrv {
     }
 
     @Override
-//    @Cacheable(key = "#root.targetClass", value = "list")
+    @Cacheable(key = "#root.targetClass", value = "list")
     public List<Permission> list() throws DataAccessException {
-        List<Permission> permissions = permissionDao.findAllByParentId(null);
-        return permissions;
+        List<Permission> ps = permissionDao.findAllByParentId(null);
+        getChildren(ps);
+        return ps;
+    }
+
+    private void getChildren(List<Permission> ps) {
+        if (ps.size() == 0) return;
+        for (Permission p : ps) {
+            p.setChildren(permissionDao.findAllByParentId(p.getId()));
+            getChildren(p.getChildren());
+        }
     }
 
     @Override

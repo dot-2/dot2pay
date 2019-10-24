@@ -1,4 +1,4 @@
-package com.dot2.dot2pay.entity;
+package com.dot2.dot2pay.model.po;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

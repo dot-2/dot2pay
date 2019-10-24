@@ -1,4 +1,4 @@
-package com.dot2.dot2pay.entity;
+package com.dot2.dot2pay.model.po;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -38,13 +37,13 @@ public class Permission extends AuditModel implements Serializable {
     // 排序编号
     private Integer sortId = 0;
 
+    private Long parentId;
+
     @JsonIgnore
     @ManyToMany
     private List<Role> roleList;
 
-    @OneToMany(mappedBy = "parentId",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Permission> children = new HashSet<>(0);
-
-    private Long parentId;
+    @Transient // 忽略字段在table中的映射
+    private List<Permission> children = new ArrayList<>(0);
 
 }

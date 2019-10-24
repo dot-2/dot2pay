@@ -1,4 +1,4 @@
-package com.dot2.dot2pay.entity;
+package com.dot2.dot2pay.model.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
