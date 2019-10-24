@@ -22,3 +22,4 @@ spring:
         hbm2ddl:
           auto: update
     show-sql: true
+    open-in-view: true

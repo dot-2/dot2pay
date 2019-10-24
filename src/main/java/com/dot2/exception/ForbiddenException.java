@@ -1,6 +1,8 @@
 package com.dot2.exception;
 
 public class ForbiddenException extends GlobalException {
+    private static final long serialVersionUID = 1132977952735447209L;
+
     public ForbiddenException(String message, Result.ErrorCode code) {
         super(message, code.getCode());
     }
