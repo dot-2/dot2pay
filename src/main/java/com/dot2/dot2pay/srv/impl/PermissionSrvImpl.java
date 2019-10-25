@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class PermissionSrvImpl implements PermissionSrv {
     }
 
     @Override
-    @CacheEvict(key = "#root.targetClass+'-'+#p0.id", value = "permission")
+    @CachePut(key = "#root.targetClass+'-'+#result.id", value = "permission")
     public Permission update(Permission permission) throws DataAccessException {
         Optional<Permission> ret = permissionDao.findById(permission.getId());
         Permission currentPermission = null;
@@ -64,7 +65,7 @@ public class PermissionSrvImpl implements PermissionSrv {
     }
 
     @Override
-    @CacheEvict(key = "#root.targetClass", value = "list")
+    @CacheEvict(key = "#root.targetClass+'-'+#p0", value = "permission")
     public void remove(Long id) throws DataAccessException {
         permissionDao.deleteById(id);
     }
