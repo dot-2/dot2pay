@@ -8,6 +8,7 @@ import java.util.List;
 public interface PermissionSrv {
     Permission add(Permission permission) throws DataAccessException;
 
+    List<Permission> list(Long parentId) throws DataAccessException;
     List<Permission> list() throws DataAccessException;
 
     Permission get(Long id);

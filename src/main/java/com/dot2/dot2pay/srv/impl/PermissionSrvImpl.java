@@ -35,10 +35,15 @@ public class PermissionSrvImpl implements PermissionSrv {
 
     @Override
     @Cacheable(key = "#root.targetClass", value = "list")
-    public List<Permission> list() throws DataAccessException {
+    public List<Permission> list(Long parentId) throws DataAccessException {
         List<Permission> ps = permissionDao.findAllByParentId(null);
         getChildren(ps);
         return ps;
+    }
+
+    @Override
+    public List<Permission> list() throws DataAccessException {
+        return list(null);
     }
 
     @Override
